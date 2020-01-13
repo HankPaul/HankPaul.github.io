@@ -493,12 +493,47 @@
     
     <div class="row">
         <div class="col l8 offset-l2 m10 offset-m1 s10 offset-s1 center-align text">
-            与天地同寿兮，与日月齐光兮
+            与天地兮同寿，与日月兮同光
         </div>
     </div>
 </div>
                     
 
+                    
+                        
+
+<link rel="stylesheet" href="/libs/aplayer/APlayer.min.css">
+<div class="music-player">
+    
+    <div class="title center-align">
+        <i class="fas fa-music"></i>&nbsp;&nbsp;听听音乐
+    </div>
+    
+    <div class="row">
+        <div class="col l8 offset-l2 m10 offset-m1 s12">
+            <div id="aplayer" class="music"></div>
+        </div>
+    </div>
+</div>
+
+<script src="/libs/aplayer/APlayer.min.js"></script>
+<script>
+$(function () {
+    new APlayer({
+        container: document.getElementById('aplayer'),
+        fixed: 'false' === 'true',
+        autoplay: 'false' === 'true',
+        theme: '#42b983',
+        loop: 'all',
+        order: 'list',
+        preload: 'auto',
+        volume: Number('0.7'),
+        listFolded: 'false' === 'true',
+        listMaxHeight: '',
+        audio: eval([{"name":"陪你去流浪","artise":"薛之谦","url":"https://music.163.com/song/media/outer/url?id=1374056689.mp3","cover":"http://p1.music.126.net/DHUrNjC-1d6Snpcfg20Umw==/109951164583315133.jpg?param=130y130"},{"name":"麻雀","artise":"李荣浩","url":"https://music.163.com/song/media/outer/url?id=1407551413.mp3","cover":"http://p1.music.126.net/TzlSVBiNtpRD2b7MT2Hi-w==/109951164527590793.jpg?param=130y130"},{"name":"Hymn For The Weekend [Remix]","artise":"Alan Walker / Coldplay","url":"https://music.163.com/song/media/outer/url?id=419594258.mp3","cover":"http://p2.music.126.net/zx0EgLRhfOo-q906272T0Q==/3427177756044412.jpg?param=130y130"}])
+    });
+});
+</script>
                     
 
                     
