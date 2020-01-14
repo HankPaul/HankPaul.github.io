@@ -4,8 +4,8 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="Hello World, HankPaul">
-    <meta name="description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hex">
+    <meta name="keywords" content="cookie与session, HankPaul">
+    <meta name="description" content="cookies与session的关系cookies在网站中，http请求是无状态的。也就是说即使第一次和服务器连接后并且登录成功后，第二次请求服务器依然不能知道当前请求是哪个用户。cookie的出现就是为了解决这个问题，第一次登录后服务器返">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -13,7 +13,7 @@
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>Hello World | HankPaul</title>
+    <title>cookie与session | HankPaul</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -306,12 +306,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/12.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/source/images/xxx.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">Hello World</h1>
+                    <h1 class="description center-align post-title">cookie与session</h1>
                 </div>
             </div>
         </div>
@@ -426,9 +426,17 @@
             <div class="row tag-cate">
                 <div class="col s7">
                     
-                          <div class="article-tag">
-                            <span class="chip bg-color">无标签</span>
-                          </div>
+                    <div class="article-tag">
+                        
+                            <a href="/tags/Markdown/">
+                                <span class="chip bg-color">Markdown</span>
+                            </a>
+                        
+                            <a href="/tags/Typora/">
+                                <span class="chip bg-color">Typora</span>
+                            </a>
+                        
+                    </div>
                     
                 </div>
                 <div class="col s5 right-align">
@@ -457,20 +465,42 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
+                <h2 id="cookies与session的关系"><a href="#cookies与session的关系" class="headerlink" title="cookies与session的关系"></a>cookies与session的关系</h2><h3 id="cookies"><a href="#cookies" class="headerlink" title="cookies"></a>cookies</h3><p>在网站中，http请求是无状态的。也就是说即使第一次和服务器连接后并且登录成功后，第二次请求服务器依然不能知道当前请求是哪个用户。cookie的出现就是为了解决这个问题，第一次登录后服务器返回一些数据（cookie）给浏览器，然后浏览器保存在本地，当该用户发送第二次请求的时候，就会自动的把上次请求存储的cookie数据自动的携带给服务器，服务器通过浏览器携带的数据就能判断当前用户是哪个了。cookie存储的数据量有限，不同的浏览器有不同的存储大小，但一般不超过4KB。因此使用cookie只能存储一些小量的数据。</p>
+<h3 id="session"><a href="#session" class="headerlink" title="session"></a>session</h3><p>session和cookie的作用有点类似，都是为了存储用户相关的信息。不同的是，cookie是存储在<code>本地浏览器</code>，而session存储在<code>服务器</code>。存储在服务器的数据会更加的安全，不容易被窃取。但存储在服务器也有一定的弊端，就是会占用服务器的资源，但现在服务器已经发展至今，一些session信息还是绰绰有余的。</p>
+<h3 id="两者传输的关系"><a href="#两者传输的关系" class="headerlink" title="两者传输的关系"></a>两者传输的关系</h3><p><strong>1.客户端第一请求，服务端会发送登陆页面过去</strong></p>
+<p><strong>2.客户第二次请求并提交用户名和密码后，服务端会向客户端回写一个cookie值</strong></p>
+<p><strong>3.如果我们设置了session，则会向客户端回写一个 {sessionid : ‘lr3gmj3vpt0ytf7locqnb21p0cg63iek’}，它会保存在客户端</strong></p>
+<p><strong>4.服务端会将客户的隐私信息保存在了服务端的数据库中， 也就是session保存在了数据库中，默认放在django_session表中：{“dsjnalndjskanjdksa” : {“name”:’jojo’, ‘age’:12, ‘addr’:’dsabdsa’}}，也就是以session值：用户信息的形式存储</strong></p>
+<p><strong>5.我们可以理解为cookie的value值就是session的key，当我们再次向服务端发起请求时，服务端会通过sessionid来比对信息，然后返回用户信息</strong></p>
+<h2 id="Cookie"><a href="#Cookie" class="headerlink" title="Cookie"></a><strong>Cookie</strong></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">#设置cookie</span><br><span class="line">obj &#x3D; redirect(&#39;&#x2F;home&#x2F;&#39;)</span><br><span class="line">obj.set_cookie(&#39;username&#39;,&#39;hank666&#39;)</span><br><span class="line"></span><br><span class="line">#删除cookie</span><br><span class="line">#obj.delete_cookie(&#39;username&#39;)</span><br><span class="line"></span><br><span class="line">#获取cookie</span><br><span class="line">request.COOKIES.get(&#39;username&#39;)</span><br></pre></td></tr></table></figure>
 
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+<h3 id="实现cookie登录方式一"><a href="#实现cookie登录方式一" class="headerlink" title="实现cookie登录方式一"></a>实现cookie登录方式一</h3><p>views.py</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">def login(request):</span><br><span class="line">    if request.method &#x3D;&#x3D;&#39;POST&#39;:</span><br><span class="line">        username &#x3D; request.POST.get(&#39;username&#39;)</span><br><span class="line">        password &#x3D; request.POST.get(&#39;password&#39;)</span><br><span class="line">        if username &#x3D;&#x3D; &#39;hank&#39; and password &#x3D;&#x3D; &#39;123&#39;:</span><br><span class="line">            #保存用户登录状态</span><br><span class="line">            obj &#x3D; redirect(&#39;&#x2F;home&#x2F;&#39;)</span><br><span class="line">            #设置cookie</span><br><span class="line">            obj.set_cookie(&#39;username&#39;,&#39;hank666&#39;)</span><br><span class="line">            return obj</span><br><span class="line">    return render(request,&#39;login.html&#39;)</span><br><span class="line"></span><br><span class="line">def home(request):</span><br><span class="line">    # 校验浏览器是否有对应的cookie</span><br><span class="line">    if request.COOKIES.get(&#39;username&#39;):</span><br><span class="line">        print(request.COOKIES)</span><br><span class="line">        return HttpResponse(&#39;我是home页面，只有登录的用户才能访问&#39;)</span><br><span class="line">    else:</span><br><span class="line">        return redirect(&#39;&#x2F;login&#x2F;&#39;)</span><br></pre></td></tr></table></figure>
 
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+<h3 id="实现cookie登录方式二-（装饰器）"><a href="#实现cookie登录方式二-（装饰器）" class="headerlink" title="实现cookie登录方式二 （装饰器）"></a>实现cookie登录方式二 （装饰器）</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line">def login_auth(func):</span><br><span class="line">    def inner(request,*args,**kwargs):</span><br><span class="line">        #print(&#39;request.path_info:&#39;, request.path_info)  # 只拿路径部分 不拿参数</span><br><span class="line">        #print(&#39;request.get_full_path():&#39;, request.get_full_path())  # 路径加参数</span><br><span class="line"></span><br><span class="line">        # 执行被装饰函数之前为其装上新功能</span><br><span class="line">        if request.COOKIES.get(&#39;username&#39;):</span><br><span class="line">            res &#x3D; func(request,*args,**kwargs)</span><br><span class="line">            return res</span><br><span class="line">        else:</span><br><span class="line">            return redirect(&#39;&#x2F;login&#x2F;&#39;)</span><br><span class="line">    return inner</span><br><span class="line"></span><br><span class="line">def login(request):</span><br><span class="line">    if request.method &#x3D;&#x3D;&#39;POST&#39;:</span><br><span class="line">        username &#x3D; request.POST.get(&#39;username&#39;)</span><br><span class="line">        password &#x3D; request.POST.get(&#39;password&#39;)</span><br><span class="line">        if username &#x3D;&#x3D; &#39;hank&#39; and password &#x3D;&#x3D; &#39;123&#39;:</span><br><span class="line">            #保存用户登录状态</span><br><span class="line">            obj &#x3D; redirect(&#39;&#x2F;home&#x2F;&#39;)</span><br><span class="line">            #设置cookie</span><br><span class="line">            obj.set_cookie(&#39;username&#39;,&#39;hank666&#39;)</span><br><span class="line">            return obj</span><br><span class="line">    return render(request,&#39;login.html&#39;)</span><br><span class="line"></span><br><span class="line">@login_auth</span><br><span class="line">def home(request):</span><br><span class="line">    # 校验浏览器是否有对应的cookie</span><br><span class="line">    # if request.COOKIES.get(&#39;username&#39;):</span><br><span class="line">    #     print(request.COOKIES)</span><br><span class="line">    #     return HttpResponse(&#39;我是home页面，只有登录的用户才能访问&#39;)</span><br><span class="line">    # else:</span><br><span class="line">    #     return redirect(&#39;&#x2F;login&#x2F;&#39;)</span><br><span class="line">    return HttpResponse(&#39;我是home页面，只有登录的用户才能访问&#39;)</span><br><span class="line"></span><br><span class="line">@login_auth</span><br><span class="line">def index(request):</span><br><span class="line">    return HttpResponse(&#39;我是index页面，只有登录的用户才能访问&#39;)</span><br><span class="line"></span><br><span class="line">@login_auth</span><br><span class="line">def demo(request):</span><br><span class="line">    return HttpResponse(&#39;我是demo页面，只有登录的用户才能访问&#39;)</span><br></pre></td></tr></table></figure>
 
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+<h3 id="cookie登录方式二改进版-（装饰器）"><a href="#cookie登录方式二改进版-（装饰器）" class="headerlink" title="cookie登录方式二改进版 （装饰器）"></a>cookie登录方式二改进版 （装饰器）</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line">def login_auth(func):</span><br><span class="line">    def inner(request,*args,**kwargs):</span><br><span class="line">        #print(&#39;request.path_info:&#39;, request.path_info)  # 只拿路径部分 不拿参数</span><br><span class="line">        #print(&#39;request.get_full_path():&#39;, request.get_full_path())  # 路径加参数</span><br><span class="line"></span><br><span class="line">        # 执行被装饰函数之前为其装上新功能</span><br><span class="line">        target_url &#x3D; request.path_info</span><br><span class="line">        if request.COOKIES.get(&#39;username&#39;):</span><br><span class="line">            res &#x3D; func(request,*args,**kwargs)</span><br><span class="line">            return res</span><br><span class="line">        else:</span><br><span class="line">            return redirect(&#39;&#x2F;login&#x2F;?next&#x3D;%s&#39; %target_url)</span><br><span class="line">    return inner</span><br><span class="line"></span><br><span class="line">def login(request):</span><br><span class="line">    if request.method &#x3D;&#x3D;&#39;POST&#39;:</span><br><span class="line">        username &#x3D; request.POST.get(&#39;username&#39;)</span><br><span class="line">        password &#x3D; request.POST.get(&#39;password&#39;)</span><br><span class="line">        if username &#x3D;&#x3D; &#39;hank&#39; and password &#x3D;&#x3D; &#39;123&#39;:</span><br><span class="line">            # target_url &#x3D; request.GET.get(&#39;next&#39;,&#39;&#x2F;home&#x2F;&#39;)</span><br><span class="line">            target_url &#x3D; request.GET.get(&#39;next&#39;)</span><br><span class="line">            #判断用户登录之前是否有想要访问的url</span><br><span class="line">            if target_url:</span><br><span class="line">                obj &#x3D; redirect(target_url)</span><br><span class="line">            else:</span><br><span class="line">                obj &#x3D;redirect(&#39;&#x2F;home&#x2F;&#39;)</span><br><span class="line">            #保存用户登录状态</span><br><span class="line">            #设置cookie</span><br><span class="line">            obj.set_cookie(&#39;username&#39;,&#39;hank666&#39;)</span><br><span class="line">            return obj</span><br><span class="line">    return render(request,&#39;login.html&#39;)</span><br><span class="line"></span><br><span class="line">@login_auth</span><br><span class="line">def home(request):</span><br><span class="line">    return HttpResponse(&#39;我是home页面，只有登录的用户才能访问&#39;)</span><br><span class="line"></span><br><span class="line">@login_auth</span><br><span class="line">def index(request):</span><br><span class="line">    return HttpResponse(&#39;我是index页面，只有登录的用户才能访问&#39;)</span><br><span class="line"></span><br><span class="line">@login_auth</span><br><span class="line">def demo(request):</span><br><span class="line">    return HttpResponse(&#39;我是demo页面，只有登录的用户才能访问&#39;)</span><br><span class="line"></span><br><span class="line">@login_auth</span><br><span class="line">def logout(request):</span><br><span class="line">    obj &#x3D; HttpResponse(&#39;注销了&#39;)</span><br><span class="line">    obj.delete_cookie(&#39;username&#39;)</span><br><span class="line">    return obj</span><br></pre></td></tr></table></figure>
 
-<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html" target="_blank" rel="noopener">Deployment</a></p>
+<p>login.html</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html lang&#x3D;&quot;en&quot;&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">    &lt;meta charset&#x3D;&quot;UTF-8&quot;&gt;</span><br><span class="line">    &lt;title&gt;Title&lt;&#x2F;title&gt;</span><br><span class="line">    &lt;script src&#x3D;&quot;https:&#x2F;&#x2F;cdn.bootcss.com&#x2F;jquery&#x2F;3.4.1&#x2F;jquery.min.js&quot;&gt;&lt;&#x2F;script&gt;</span><br><span class="line">    &lt;link href&#x3D;&quot;https:&#x2F;&#x2F;cdn.bootcss.com&#x2F;twitter-bootstrap&#x2F;3.4.1&#x2F;css&#x2F;bootstrap.min.css&quot; rel&#x3D;&quot;stylesheet&quot;&gt;</span><br><span class="line">    &lt;script src&#x3D;&quot;https:&#x2F;&#x2F;cdn.bootcss.com&#x2F;twitter-bootstrap&#x2F;3.4.1&#x2F;js&#x2F;bootstrap.min.js&quot;&gt;&lt;&#x2F;script&gt;</span><br><span class="line">&lt;&#x2F;head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">&lt;form action&#x3D;&quot;&quot; method&#x3D;&quot;post&quot;&gt;</span><br><span class="line">    &lt;p&gt;username: &lt;input type&#x3D;&quot;text&quot; name&#x3D;&quot;username&quot;&gt;&lt;&#x2F;p&gt;</span><br><span class="line">    &lt;p&gt;password: &lt;input type&#x3D;&quot;text&quot; name&#x3D;&quot;password&quot;&gt;&lt;&#x2F;p&gt;</span><br><span class="line">    &lt;input type&#x3D;&quot;submit&quot;&gt;</span><br><span class="line">&lt;&#x2F;form&gt;    </span><br><span class="line">&lt;&#x2F;body&gt;</span><br><span class="line">&lt;&#x2F;html&gt;</span><br></pre></td></tr></table></figure>
 
+<p>注意：</p>
+<p><img src="https://img2018.cnblogs.com/i-beta/1843747/202001/1843747-20200113202846548-26725075.png" alt="img"></p>
+<h2 id="session-1"><a href="#session-1" class="headerlink" title="session"></a>session</h2><p><strong>Django设置session</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">request.session[&#39;key&#39;] &#x3D; value</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    1.django内部会自动生成一个随机字符串</span><br><span class="line">    2.去django_session表中存储数据 键就是随机字符串 值是要保存的数据(中间件干的)</span><br><span class="line">    3.将生成好的随机字符串返回给客户端浏览器   浏览器保存键值对</span><br><span class="line">        sessionid  随机字符串</span><br><span class="line">    &quot;&quot;&quot;</span><br></pre></td></tr></table></figure>
+
+<p><strong>获取session</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">request.session.get(&#39;key&#39;)</span><br><span class="line">        &quot;&quot;&quot;</span><br><span class="line">    1.django会自动取浏览器的cookie查找sessionid键值对 获取随机字符串</span><br><span class="line">    2.拿着该随机字符串取django_session表中比对数据</span><br><span class="line">    3.如果比对上了 就将随机字符串对应的数据获取出来并封装到request.session供用户调用</span><br><span class="line">    &quot;&quot;&quot;</span><br></pre></td></tr></table></figure>
+
+<p><strong>删除当前会话的所有session数据</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">request.session.delete()</span><br></pre></td></tr></table></figure>
+
+<p><strong>删除当前的会话数据并删除会话的Cookie（推荐使用）</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">request.session.flush()</span><br><span class="line">    这用于确保前面的会话数据不可以再次被用户的浏览器访问</span><br><span class="line">    例如，django.contrib.auth.logout() 函数中就会调用它。</span><br></pre></td></tr></table></figure>
+
+<p>注意：django中默认的session超时时间为14天</p>
+<p><strong>设置会话Session和Cookie的超时时间</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">request.session.set_expiry(value)</span><br><span class="line">    * 如果value是个整数，session会在些秒数后失效。</span><br><span class="line">    * 如果value是个datatime或timedelta，session就会在这个时间后失效。</span><br><span class="line">    * 如果value是0,用户关闭浏览器session就会失效。</span><br><span class="line">    * 如果value是None,session会依赖全局session失效策略。</span><br></pre></td></tr></table></figure>
             </div>
             <hr/>
 
@@ -485,7 +515,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://hankpaul.github.io" rel="external nofollow noreferrer">HankPaul</a>
+                    <a href="https://hankpaul.github.io" rel="external nofollow noreferrer">Hank Paul</a>
                 </span>
             </div>
             <div class="reprint__type">
@@ -495,7 +525,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://hankpaul.github.io/2020/01/13/hello-world/">https://hankpaul.github.io/2020/01/13/hello-world/</a>
+                    <a href="https://hankpaul.github.io/2020/01/13/cookie%E4%B8%8Esession/">https://hankpaul.github.io/2020/01/13/cookie%E4%B8%8Esession/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -508,7 +538,7 @@
                     本博客所有文章除特別声明外，均采用
                     <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
                     许可协议。转载请注明来源
-                    <a href="https://hankpaul.github.io" target="_blank">HankPaul</a>
+                    <a href="https://hankpaul.github.io" target="_blank">Hank Paul</a>
                     !
                 </span>
             </div>
@@ -532,7 +562,15 @@
                 <div class="post-meta__tag-list" style="display: inline-block;">
                     
                         <div class="article-tag">
-                            <span class="chip bg-color">无标签</span>
+                            
+                                <a href="/tags/Markdown/">
+                                    <span class="chip bg-color">Markdown</span>
+                                </a>
+                            
+                                <a href="/tags/Typora/">
+                                    <span class="chip bg-color">Typora</span>
+                                </a>
+                            
                         </div>
                     
                 </div>
@@ -576,7 +614,7 @@
         repo: 'hankpaul.github.io',
         owner: 'HankPaul',
         admin: ["HankPaul"],
-        id: '2020-01-13T12-16-20',
+        id: '2020-01-13T23-44-12',
         distractionFreeMode: false  // Facebook-like distraction free mode
     });
 
@@ -597,9 +635,10 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
                 <a href="/2020/01/13/cookie%E4%B8%8Esession/">
                     <div class="card-image">
@@ -616,9 +655,9 @@
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2020-01-13
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-01-13
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-user fa-fw"></i>
@@ -627,6 +666,7 @@
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
@@ -646,7 +686,7 @@
         
         <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge right-badge text-color">
-                本篇&nbsp;<i class="far fa-dot-circle"></i>
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
                 <a href="/2020/01/13/hello-world/">
@@ -676,7 +716,6 @@
                         </span>
                     </div>
                 </div>
-
                 
             </div>
         </div>
